@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changing.dao.mapper.LogInfosMapper" >
+  <resultMap id="BaseResultMap" type="com.changing.model.db.LogInfos" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="logger_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="thread_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="level" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="log_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="host" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="status" jdbcType="BIT" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.changing.model.db.LogInfos" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="logger_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="thread_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="level" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="log_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="host" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="status" jdbcType="BIT" javaType="java.lang.Integer" />
+      <arg column="data" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id ="insertBatch" parameterType="java.util.List" >
+    <selectKey resultType ="java.lang.Integer" keyProperty= "id"
+               order= "AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey >
+    insert into log_infos
+    (logger_name, thread_name, level, log_time,data,host)
+    values
+    <foreach collection ="list" item="logInfo" index= "index" separator =",">
+      (
+      #{logInfo.loggerName}, #{logInfo.threadName},
+      #{logInfo.type},
+      #{logInfo.logTime},
+      #{logInfo.data}, #{logInfo.host}
+      )
+    </foreach >
+  </insert>
+
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, logger_name, thread_name, level, log_time, host, create_time, update_time, status
+  </sql>
+  <sql id="Blob_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    data
+  </sql>
+</mapper>
